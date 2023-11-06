@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter&display=swap');
+
+body{
+    background: linear-gradient(180deg, #F2F2F2 0%, #31B5C1 100%);
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.login {
+    display: flex;
+    background-color: #fcf9f4;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    width: 500px;
+    height: 500px;
+    font-family: "Bitter", sans-serif;
+    color: #430f82;
+    font-size: 20px;
+    padding: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+    .login input{
+        font-family: "Bitter", sans-serif;
+        border-radius: 15px;
+        border: 5px;
+        width: 300px;
+        height: 40px;                                                                                                                               
+    }
+
+    .login p{
+        margin-right: 45%;
+    }
+
+    .login button{
+        font-family: "Bitter", sans-serif;
+        background-color: #430f82;
+        color: white;
+        border-radius: 15px;
+        border: none;
+        margin: 10px; 
+        width: 200px;
+        height: 50px;
+        margin: 50px;                                                                                                                                 
+    }
+    
+        .login button:hover{
+            background-color: #f3e4ce;
+        }
+
+        
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    height: 50px;
+}
+
+.footer {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    height: 50px;
+}
