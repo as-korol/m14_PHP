@@ -3,6 +3,7 @@
 body{
     text-align: center;
     font-family: "Bitter", sans-serif;
+    background: linear-gradient(180deg, #F2F2F2 0%, #31B5C1 100%);
     margin: 0;
 }
 
@@ -23,15 +24,19 @@ body{
     border-radius: 10px;
     padding: 10px;
     margin: 40px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    background-color: #fcf9f4;
 }
+
+    .block h2{
+        color: #24a9b5;
+    }
 
 .header{
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 20px;
-    background-color: green;
+    background-color: white;
     height: 50px;
 }
 
@@ -39,21 +44,21 @@ body{
          height: 50px;
          width: 200px;
          margin: 10px;
-         background-color: brown;
+         background-color: #430f82;
          font-family: "Bitter", sans-serif;
          color: white;
          border: none;
          border-radius: 10px;
     }
         .header button:hover{
-            background-color: white;
+            background-color: #f3e4ce;
             color: black;
         }
 
 .footer{
     display: flex;
     flex-direction: column;
-    background-color: green;
+    background-color: black;
     color: white;
     height: 50px;
 }
