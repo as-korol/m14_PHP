@@ -1,13 +1,18 @@
+<?php
+session_start();
+?>
+
 <html>
     <head>
         <title>SPA - салон</title>
-        <link rel="stylesheet" href="/Styles/styles.css"
+        <link rel="stylesheet" href="./styles/index.css"
         <meta charset="utf-8">
     </head>
     <body>
         <div class="header">
-            <button type="submit">Авторизоваться</button>
-            <button type="submit">Выйти</button>
+            <a href="./pages/login.php" class="enter">Войти</a>
+            <a href="./sripts/exit.php" class="exit">Выйти</a>
+            <p><?php echo isset($_SESSION['login']) ? 'Ваш логин: ' . $_SESSION['login'] : ''; ?></p>
         </div>
         <div class="container"> 
             <div class="block">

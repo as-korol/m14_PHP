@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>SPA - авторизация</title>
-        <link rel="stylesheet" href='/Styles/login.css'>
+        <link rel="stylesheet" href='/styles/login.css'>
         <meta charset="utf-8">
     </head>
     <body>
@@ -9,7 +9,7 @@
         </div>
         <div class="container"> 
 			<div class="login">
-                <form class="form" action="Sripts/index.php" method="POST">
+                <form class="form" action="/sripts/general.php" method="POST">
                     <h3>Авторизация</h3>
                     <p>Логин</p>
                     <input type="text" name="login">
