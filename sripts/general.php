@@ -19,7 +19,7 @@ function existsUser($login) {
     }
 }
 
-function checkPassword($login, $password) {
+function checkPassword($login, $password) { // Проверка пароля, иницилизация сессии, запись времени в сессию
 
     $checkLogin = existsUser($login);
     
@@ -30,18 +30,22 @@ function checkPassword($login, $password) {
             session_start();
             $_SESSION['auth'] = true;
             $_SESSION['login'] = $login;
+            if (!isset($_SESSION['login_time'])) {
+                $_SESSION['login_time'] = time();
+            }
             header("Location: /index.php");
             exit();
         } else {
             return false;
         }
     } else {
-        return false;
+        header("Location: /pages/login.php");
+        exit();
     }
 
 }
 
-function getCurrentUser() {
+function getCurrentUser() { // Вернуть текущий логин в сессии
     if (session_status() === PHP_SESSION_ACTIVE) {
         return $_SESSION['login'];
     } else {
@@ -49,7 +53,7 @@ function getCurrentUser() {
     };
 }
 
-function checkAuth ($login, $password) {
+function checkAuth ($login, $password) { // Проверка наличия авторизированной сессии
     if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
         header('Location: /index.php');
         exit();
