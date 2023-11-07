@@ -31,30 +31,41 @@ body{
         color: #24a9b5;
     }
 
-.header{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 20px;
-    background-color: white;
-    height: 50px;
+.header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 20px;
+     background-color: white;
+     height: 50px;
+     flex-direction: row-reverse;
 }
 
-    .header button{
-         height: 50px;
-         width: 200px;
-         margin: 10px;
-         background-color: #430f82;
-         font-family: "Bitter", sans-serif;
-         color: white;
-         border: none;
-         border-radius: 10px;
+    .header p {
+        flex-grow: 1;
+        text-align: center;
     }
-        .header button:hover{
+
+    .header a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30px;
+        width: 100px;
+        margin: 10px;
+        background-color: #430f82;
+        font-family: "Bitter", sans-serif;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 10px;
+    }
+    
+        .header a:hover {
             background-color: #f3e4ce;
             color: black;
         }
-
+    
 .footer{
     display: flex;
     flex-direction: column;

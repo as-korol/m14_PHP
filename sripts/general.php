@@ -1,19 +1,8 @@
 <?php 
 
+require './passwords.php';
 $login = $_POST['login'] ?? null;
 $password = $_POST['password'] ?? null;
-
-function getUsersList() {
-    $users = [
-        'user0' => ['password' => sha1(123), 'birthday' => sha1('10.02.2005')],
-        'user1' => ['password' => sha1(312), 'birthday' => sha1('02.10.1988')], 
-        'user2' => ['password' => sha1(213), 'birthday' => sha1('28.02.2001')], 
-        'user3' => ['password' => sha1(321), 'birthday' => sha1('15.02.1996')], 
-        'user4' => ['password' => sha1(132), 'birthday' => sha1('07.02.1995')]      
-    ];
-
-    return $users;
-}
 
 function existsUser($login) {
 
@@ -28,11 +17,10 @@ function existsUser($login) {
     } else {
         return false;
     }
-
 }
 
 function checkPassword($login, $password) {
-    
+
     $checkLogin = existsUser($login);
     
     if ($checkLogin === true && $password !== null) {
@@ -42,6 +30,8 @@ function checkPassword($login, $password) {
             session_start();
             $_SESSION['auth'] = true;
             $_SESSION['login'] = $login;
+            header("Location: /index.php");
+            exit();
         } else {
             return false;
         }
@@ -51,4 +41,22 @@ function checkPassword($login, $password) {
 
 }
 
-echo  checkPassword($login, $password);
+function getCurrentUser() {
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        return $_SESSION['login'];
+    } else {
+        return null;
+    };
+}
+
+function checkAuth ($login, $password) {
+    if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
+        header('Location: /index.php');
+        exit();
+    } else {
+        checkPassword($login, $password);
+    }
+
+}
+
+checkAuth ($login, $password);
