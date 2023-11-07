@@ -1,5 +1,8 @@
 <?php
 session_start();
+/* $discount_expiry = $_SESSION['login_time'] + (24 * 60 * 60);
+$time_left = $discount_expiry - time();
+$time_left_formatted = gmdate("H:i:s", $time_left); */
 ?>
 
 <html>
@@ -17,7 +20,7 @@ session_start();
         <div class="container"> 
             <div class="block">
                 <h2>Профессионализм и опыт наших специалистов</h2>
-                <p>Наша команда состоит из высококвалифицированных и опытных специалистов.</p>
+                <p><?php echo $time_left_formatted?></p>
             </div>
             <div class="block">
                 <h2>Уютная и расслабляющая атмосфера</h2>
