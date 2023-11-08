@@ -20,8 +20,7 @@ function existsUser($login) {
     }
 }
 
-function checkPassword($login, $password) { // Проверка пароля, иницилизация сессии, запись времени в сессию
-
+function checkPassword($login, $password) {
     $checkLogin = existsUser($login);
     
     if ($checkLogin === true && $password !== null) {
@@ -47,7 +46,6 @@ function checkPassword($login, $password) { // Проверка пароля, и
         header("Location: /pages/login.php");
         exit();
     }
-
 }
 
 function getCurrentUser() { // Вернуть текущий логин в сессии

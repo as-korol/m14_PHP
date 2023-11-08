@@ -9,7 +9,7 @@
         </div>
         <div class="container"> 
 			<div class="login">
-                <form class="form" action="/sripts/general.php" method="POST">
+                <form class="form" action="/sripts/birth.php" method="POST">
                     <h3>День рождения!</h3>
                     <p>Введите дату</p>
                     <input type="date" name="dateOfBirthday">         
