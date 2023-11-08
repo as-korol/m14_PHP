@@ -3,6 +3,7 @@
 require './passwords.php';
 $login = $_POST['login'] ?? null;
 $password = $_POST['password'] ?? null;
+$dateOfBirthday = $_POST['dateOfBirthday'] ?? null;
 
 function existsUser($login) {
 
@@ -32,6 +33,10 @@ function checkPassword($login, $password) { // Проверка пароля, и
             $_SESSION['login'] = $login;
             if (!isset($_SESSION['login_time'])) {
                 $_SESSION['login_time'] = time();
+                $discount_expiry = $_SESSION['login_time'] + (24 * 60 * 60);
+                $time_left = $discount_expiry - time();
+                $time_left_formatted = gmdate("H:i:s", $time_left);
+                $_SESSION['time_left_formatted'] = $time_left_formatted;
             }
             header("Location: /index.php");
             exit();
@@ -64,3 +69,5 @@ function checkAuth ($login, $password) { // Проверка наличия ав
 }
 
 checkAuth ($login, $password);
+
+ 
