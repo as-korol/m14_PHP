@@ -21,8 +21,9 @@ function existsUser($login) {
 }
 
 function checkPassword($login, $password) {
+
     $checkLogin = existsUser($login);
-    
+
     if ($checkLogin === true && $password !== null) {
         $users = getUsersList();
         $user = $users[$login];
@@ -40,7 +41,8 @@ function checkPassword($login, $password) {
             header("Location: /index.php");
             exit();
         } else {
-            return false;
+            header("Location: /pages/login.php");
+            exit();
         }
     } else {
         header("Location: /pages/login.php");

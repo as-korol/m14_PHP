@@ -19,8 +19,12 @@ if (isset($_SESSION['auth'])) {
     } else {
         $dateOfBirthday = strtotime($_SESSION['dateOfBirthday']);
         $today = strtotime('today');
-        $nextBirthday = strtotime('+' . (date('Y', $today) - date('Y', $dateOfBirthday)) . ' years', $dateOfBirthday);
-        $daysUntilBirthday = ($nextBirthday - $today) / (60*60*24);
+        $nextBirthdayYear = date('Y', $today);
+        $nextBirthday = strtotime(date('Y-m-d', $dateOfBirthday) . ' +' . $nextBirthdayYear - date('Y', $dateOfBirthday) . ' years');
+        if ($nextBirthday < $today) {
+            $nextBirthday = strtotime(date('Y-m-d', $nextBirthday) . ' +1 year');
+        }
+        $daysUntilBirthday = ($nextBirthday - $today) / (60*60*24);    
     }
 }
 
@@ -37,14 +41,15 @@ if (isset($_SESSION['auth'])) {
             <?= !isset($_SESSION['login']) ?'<a href="./pages/login.php" class="enter">Войти</a>' : '' ?>  
             <?= isset($_SESSION['login']) ? '<a href="./sripts/exit.php" class="exit">Выйти</a>' : '' ?>
             <p><?= isset($_SESSION['login']) ? 'Ваш логин: ' . $_SESSION['login'] : ''; ?></p>
-            <p><?= isset($_SESSION['login']) ? '|До вашего дня рождения осталось ' . $daysUntilBirthday . '|' : '' ?></p>
-            <p><?= isset($_SESSION['login']) ? '|Ваше следующее день рождение через ' . $daysUntilBirthday . '|' : '' ?></p>
+            <p><?= isset($_SESSION['login']) && $dateOfBirthday === $today ? 'У вас сегодня день рождение, поздравляем! Для вас подготовлена доп. акция.' : '' ?></p>
+            <p><?= isset($_SESSION['login']) && $dateOfBirthday !== $today ? 'Ваше следующее день рождение через <strong> ' . $daysUntilBirthday . '</strong> дня, заходите мы сделаем подарок для вас!' : '' ?></p>       
         </div>
         <div class="container"> 
             <div class="block">
                 <h2><?= isset($_SESSION['login']) ? 'Релакс-день' : 'Профессионализм и опыт наших специалистов'?></h2>
                 <p><?= isset($_SESSION['login']) ? 'Скидка истекает через : <strong>' . $_SESSION['time_left_formatted'] . '</strong>'  : 'Мы понимаем, что каждый клиент уникален, поэтому мы предлагаем индивидуальный подход к каждому.' ?></p>
                 <p><?= isset($_SESSION['login'])  ? 'Полный день релаксации в вашем SPA салоне!' : '' ?></p>
+                <img src="./images/image.jpg"/>
                 <p><?= isset($_SESSION['login']) ? '<strong>' . ($one - 50) . '</strong> вместо <s>'. ($one) .'</s>' : '' ?></p>
         
             </div>
@@ -52,13 +57,16 @@ if (isset($_SESSION['auth'])) {
                 <h2><?= isset($_SESSION['login']) ? 'Двойное удовольствие' : 'Уютная и расслабляющая атмосфера'?></h2>
                 <p><?= isset($_SESSION['login']) ? 'Скидка истекает через : <strong> ' . $_SESSION['time_left_formatted'] . '</strong>'  : 'Мы создали специальную обстановку, чтобы вы могли полностью расслабиться и насладиться процедурами.' ?></p>
                 <p><?= isset($_SESSION['login']) ? 'При бронировании массажа можно получить вторую услугу, такую как педикюр или чистка лица, бесплатно' : '' ?></p>
+                <img src="./images/image1.jpg"/>
                 <p><?= isset($_SESSION['login']) ? '<strong>' . ($two - 200) . '</strong> вместо <s>' . ($two) . '</s>' : '' ?></p>
             </div>
             <div class="block">
                 <h2><?= isset($_SESSION['login']) ? 'Специальные тарифы на время' : 'Профессионализм и опыт наших специалистов'?></h2>
                 <p><?= isset($_SESSION['login'])  ? 'Скидка истекает через :  <strong> ' . $_SESSION['time_left_formatted'] . '</strong>' : 'Мы понимаем, что каждый клиент уникален, поэтому мы предлагаем индивидуальный подход к каждому.' ?></p>
-                <p><?= isset($_SESSION['login'])  ? 'На период, <strong>с 12:00 до 15:00</strong>, ТОЛЬКО СЕГОДНЯ!' : '' ?></p>
-                <p><?= isset($_SESSION['login']) && $dateOfBirthday === $today ? 'Дополнительная скидка 5% в честь дня рождения! <strong>' . ($three - 10) * 0.95 . 'р</strong> вместо <s>' . $three .  '</s> за 60 минут' : '' ?></p>
+                <p><?= isset($_SESSION['login']) && $dateOfBirthday !== $today  ? 'На период, <strong>с 12:00 до 15:00</strong>, ТОЛЬКО СЕГОДНЯ! <strong>' . $three - 100 . '</strong> вместо <s>' . $three . '</s>' : '' ?></p>
+                <img src="./images/image2.jpg"/>
+                <p><?= isset($_SESSION['login']) && $dateOfBirthday === $today ? 'Дополнительная скидка 5% в честь дня рождения! <strong>' . ($three - 100) * 0.95 . 'р</strong> вместо <s>' . $three .  '</s> за 60 минут' : '' ?></p>
+                
             </div>
         </div>
         <div class="footer">
