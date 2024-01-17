@@ -1,16 +1,16 @@
-<?php 
+<?php
 
-require './passwords.php';
-$login = $_POST['login'] ?? null;
-$password = $_POST['password'] ?? null;
-$dateOfBirthday = $_POST['dateOfBirthday'] ?? null;
+session_start();
 
-function existsUser($login) {
+function dataCheck()
+{
+    global $login, $password, $users;
+    $user = $users[$login];
 
-    $users = getUsersList();
-
-    if (null !== $login) {
-        if(array_key_exists($login, $users)) {
+    if (array_key_exists($login, $users)) {
+        if ($user['password'] === sha1($password)) {
+            $_SESSION['auth'] = true;
+            $_SESSION['login'] = $login;
             return true;
         } else {
             return false;
@@ -20,54 +20,66 @@ function existsUser($login) {
     }
 }
 
-function checkPassword($login, $password) {
+function sessions()
+{
+    $checkLogin = dataCheck();
 
-    $checkLogin = existsUser($login);
-
-    if ($checkLogin === true && $password !== null) {
-        $users = getUsersList();
-        $user = $users[$login];
-        if ($user['password'] === sha1($password)){
-            session_start();
-            $_SESSION['auth'] = true;
-            $_SESSION['login'] = $login;
-            if (!isset($_SESSION['login_time'])) {
-                $_SESSION['login_time'] = time();
-                $discount_expiry = $_SESSION['login_time'] + (24 * 60 * 60);
-                $time_left = $discount_expiry - time();
-                $time_left_formatted = gmdate("H:i:s", $time_left);
-                $_SESSION['time_left_formatted'] = $time_left_formatted;
-            }
+    if ($checkLogin === true) {
+        if (!isset($_SESSION['login_time'])) {
+            $_SESSION['login_time'] = time();
+            $discount_expiry = $_SESSION['login_time'] + (24 * 60 * 60);
+            $time_left = $discount_expiry - time();
+            $time_left_formatted = gmdate("H:i:s", $time_left);
+            $_SESSION['time_left_formatted'] = $time_left_formatted;
             header("Location: /index.php");
-            exit();
-        } else {
-            header("Location: /pages/login.php");
             exit();
         }
     } else {
-        header("Location: /pages/login.php");
+        header("Location: /pages/birthdayAndAuth.php");
         exit();
     }
 }
 
-function getCurrentUser() { // Вернуть текущий логин в сессии
-    if (session_status() === PHP_SESSION_ACTIVE) {
-        return $_SESSION['login'];
-    } else {
-        return null;
-    };
+
+
+function getUsersList()
+{ // Логины и пароли пользователей в sha1
+
+    $users = [
+        'a.korol' => ['password' => sha1(123123), 'birthday' => sha1('10.02.2005')],
+        'r.markidonov' => ['password' => sha1(500239), 'birthday' => sha1('02.10.1988')],
+        's.betskova' => ['password' => sha1(10291), 'birthday' => sha1('28.02.2001')],
+        'v.vahrushev' => ['password' => sha1(98730), 'birthday' => sha1('15.02.1996')],
+        'd.kolesov' => ['password' => sha1(402019), 'birthday' => sha1('07.02.1995')]
+    ];
+
+    return $users;
 }
 
-function checkAuth ($login, $password) { // Проверка наличия авторизированной сессии
-    if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) {
+function dateOfBirthday()
+{
+    global $dateOfBirthday;
+    if (!isset($_SESSION['dateOfBirthday'])) {
+        $_SESSION['dateOfBirthday'] = $dateOfBirthday;
+        header("Location: /index.php");
+        exit();
+    } else {
+        header("Location: /index.php");
+        exit();
+    }
+}
+
+if (isset($_SESSION['login'])) {
+    if(!isset($_SESSION['dateOfBirthday'])) {
+        $dateOfBirthday = $_POST['dateOfBirthday'];
+        dateOfBirthday();
+    } else {
         header('Location: /index.php');
         exit();
-    } else {
-        checkPassword($login, $password);
     }
-
+} else {
+    $login = $_POST["login"];
+    $password = $_POST["password"];
+    $users = getUsersList();
+    sessions();
 }
-
-checkAuth ($login, $password);
-
- 
